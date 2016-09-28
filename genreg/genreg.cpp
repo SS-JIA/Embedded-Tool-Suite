@@ -132,6 +132,27 @@ void genmacros(string output, uint8_t regsize, uint8_t maxlength, string mformat
     header.close();
 }
 
+int helptext()
+{
+    cout << "GENREG - A Bit Mask Macro Generator for C and C++" << endl;
+    cout << " " << endl;
+    cout << "usage: genreg [options]" << endl;
+    cout << " " << endl;
+    cout << "OPTIONS" << endl;
+    cout << "\t-o [output file name]\t\tset the name of the output file (default genreg.h)" << endl;
+    cout << "\t-r [register length]\t\tset the target register length" << endl;
+    cout << "\t-l [maximum mask length]\tset the maximum number of consecutive bits to generate masks for" << endl;
+    cout << " " << endl;
+    cout << "MACRO NAMING OPTIONS" << endl;
+    cout << "\t-F [mask macro format]\t\tset the naming convention of mask macros (any string)" << endl;
+    cout << "\t   e.g. for the format BITS_{S}_{E}, the macro for the mask 000111000 will be named BITS_3_5" << endl;
+    cout << "\t   {S} -> start bit, {E} -> end bit, {L} -> length of region masked" << endl;
+    cout << "\t-f [value offset macro format\t\t set the naming convention of value offset macros (any string)" << endl;
+    cout << "\t   e.g. for the format {0}O{O}, the macro for 101000 (5 offset by 3 bits) will be named 5O3" << endl;
+    cout << "\t   {V} -> value being offset, {O} -> number of bits to offset by" << endl;
+    return 0;
+}
+
 int main(int argc, char* argv[])
 {
     uint8_t reglength = 32;
@@ -139,7 +160,8 @@ int main(int argc, char* argv[])
     string  output = "regops.h";
     string  mformat = "BITS_{S}_{E}";
     string  vformat = "{V}O{O}";
-    for (uint8_t i = 1; i<argc; i++)
+    string longarg;
+    for (uint8_t i = 1; i < argc; i++)
     {
         if (argv[i][0] == '-')
         {
@@ -169,6 +191,11 @@ int main(int argc, char* argv[])
                     i++;
                     if (i < argc)
                         vformat = (string)argv[i];
+                    break;
+                case '-':
+                    longarg = argv[i];
+                    if (longarg == "--help")
+                        return helptext();
                     break;
             }
         }

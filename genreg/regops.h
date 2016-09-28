@@ -3,7 +3,7 @@
  * DESCRIPTION: Defines bit masks for 32 bit registers.
  *              Contains masks for regions up to 3 bits.
  *              This file was automatically generated!
- * MODIFIED:    8/22/2016
+ * MODIFIED:    8/28/2016
  * 
  * Copyright SSJIA 2016
  ********************************************************************************/
