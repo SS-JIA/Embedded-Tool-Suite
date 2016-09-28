@@ -129,6 +129,24 @@ void genmacros(string output, uint8_t regsize, uint8_t maxlength, string mformat
             }
         }
     }
+    header << " " << endl;
+    header << "/* Set and Clear Bits from register value */" << endl;
+    header << "#define SETBITV(R, P) R |= 0x01<<P" << endl;
+    header << "#define CLRBITV(R, P) R &= ~(0x01<<P)" << endl;
+    header << "/* Set and Clear Bits from register address */" << endl;
+    header << "#define SETBITA(R, P)  *R |= 0x01<<P" << endl;
+    header << "#define CLRBITA(R, P)  *R &= ~(0x01<<P)" << endl;
+    header << "/* Read the value of a bit from register value */" << endl;
+    header << "#define READBITV(R, P) ((R>>P)%2)" << endl;
+    header << "/* Read the value of a bit from register address */" << endl;
+    header << "#define READBITA( R, P ) ((*R>>P)%2)" << endl;
+    header << " " << endl;
+    header << "/* Set Multiple Bits in a Register */" << endl;
+    header << "#define SETREGV(R, S, V, L) R = (R&~(L<<S))|(V<<S)" << endl;
+    header << "#define SETREGA(R, S, V, L) *R = (*R&~(L<<S))|(V<<S)" << endl;
+    header << "/* Read Multiple Bits in a Register */" << endl;
+    header << "#define READREGV(R, S, L) (R&(L<<S))>>S" << endl;
+    header << "#define READREGA(R, S, L) (*R&(L<<S))>>S" << endl;
     header.close();
 }
 
