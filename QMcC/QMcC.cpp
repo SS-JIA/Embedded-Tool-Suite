@@ -212,15 +212,16 @@ int main(int argc, char* argv[])
     sizecol nextsize;
     sizecol primeimplicants;
     
+    /*
+    minterms.push_back("1111");
     minterms.push_back("0100");
+    minterms.push_back("1100");
     minterms.push_back("1000");
     minterms.push_back("1001");
-    minterms.push_back("1010");
-    minterms.push_back("1100");
     minterms.push_back("1011");
+    minterms.push_back("1010");
     minterms.push_back("1110");
-    minterms.push_back("1111");
-
+    */
 
     while(true)
     {
@@ -230,7 +231,7 @@ int main(int argc, char* argv[])
             help();
         else if (response == "show")
             show(minterms);
-        else if (response == "exit")
+        else if (response == "exit" || response == "quit")
             return 0;
         else if (response == "match")
         {
