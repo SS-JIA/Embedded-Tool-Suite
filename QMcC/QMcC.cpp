@@ -11,6 +11,11 @@ typedef std::vector<row> sizecol;
 
 void show(std::vector<string> &terms)
 {
+    if (terms.size() == 0)
+    {
+        std::cout << " nothing to show!" << std::endl;
+        return;
+    }
     for(int i=0; i < terms.size(); i++)
     {
         std::cout << i << "-" << terms[i] << std::endl;
@@ -189,10 +194,47 @@ void printsizecol(sizecol &col)
     }
 }
 
+string copystring(string str)
+{
+    string cpy = str;
+    return cpy;
+}
+
+std::vector<string> findeqn(sizecol& primeimplicants)
+{
+    std::vector<string> terms;
+    string pi;
+    string term;
+    for (int i=0; i<primeimplicants.size(); i++)
+    {
+         pi= std::get<1>(primeimplicants[i]);
+         term = "";
+         for (int j=0; j<pi.length(); j++)
+         {
+             if (pi.at(j) != 'X')
+                 term.push_back((char)(j+65));
+             if (pi.at(j) == '0')
+             {
+                 term.push_back((char)39);
+             }
+         }
+         terms.push_back(copystring(term));
+    }
+    return terms;
+}
+
 void solve(std::vector<string> &terms)
 {
     sizecol primeimplicants = findprimeimplicants(terms);
+    std::cout << "prime implicants:" << std::endl;
     printsizecol(primeimplicants);
+    std::cout << "solution: ";
+    std::vector<string> sln = findeqn(primeimplicants);
+    for (int i = 0; i < sln.size()-1; i++)
+    {
+        std::cout << sln.at(i) << "+";
+    }
+    std::cout << sln.at(sln.size()-1) << std::endl;
 }
 
 void help()
@@ -248,6 +290,10 @@ int main(int argc, char* argv[])
         else if (response == "solve")
         {
             solve(minterms);
+        }
+        else if (response == "clear")
+        {
+            minterms.clear();
         }
         else
         {
